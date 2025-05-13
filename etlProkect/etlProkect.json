@@ -1,0 +1,40 @@
+{
+  "name" : "etlProkect",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::654654490666:role/service-role/AWSGlueServiceRole-TestProject1",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-654654490666-eu-west-3/scripts/etlProkect.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-654654490666-eu-west-3/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-654654490666-eu-west-3/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1747140802789\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://source-france-paris-16112024/sales.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"Amazon S3\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"Transaction ID\",\"Type\":\"string\"},{\"Name\":\"Customer ID\",\"Type\":\"string\"},{\"Name\":\"Product ID\",\"Type\":\"string\"},{\"Name\":\"Quantity Sold\",\"Type\":\"string\"},{\"Name\":\"Unit Price\",\"Type\":\"string\"},{\"Name\":\"Total Price\",\"Type\":\"string\"},{\"Name\":\"Timestamp\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://source-france-paris-16112024/sales.csv\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1747140866988\":{\"ApplyMapping\":{\"Inputs\":[\"node-1747140802789\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"Transaction ID\"],\"FromType\":\"string\",\"ToKey\":\"Transaction ID\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Customer ID\"],\"FromType\":\"string\",\"ToKey\":\"Customer ID\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Product ID\"],\"FromType\":\"string\",\"ToKey\":\"Product ID\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Quantity Sold\"],\"FromType\":\"string\",\"ToKey\":\"Quantity Sold\",\"ToType\":\"int\"},{\"Dropped\":false,\"FromPath\":[\"Unit Price\"],\"FromType\":\"string\",\"ToKey\":\"Unit Price\",\"ToType\":\"decimal\"},{\"Dropped\":false,\"FromPath\":[\"Total Price\"],\"FromType\":\"string\",\"ToKey\":\"Total Amount\",\"ToType\":\"decimal\"},{\"Dropped\":false,\"FromPath\":[\"Timestamp\"],\"FromType\":\"string\",\"ToKey\":\"Timestamp\",\"ToType\":\"string\"}],\"Name\":\"Change Schema\"}},\"node-1747140929976\":{\"DropDuplicates\":{\"Columns\":[],\"Inputs\":[\"node-1747140866988\"],\"Name\":\"Drop Duplicates\"}},\"node-1747141077219\":{\"S3GlueParquetTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1747140792824\",\"IsEnabled\":true},\"Compression\":\"snappy\",\"Inputs\":[\"node-1747140929976\"],\"Name\":\"Amazon S3\",\"NumberTargetPartitions\":\"0\",\"PartitionKeys\":[],\"Path\":\"s3://target-france-paris-16112024\",\"SchemaChangePolicy\":{\"Database\":\"default\",\"EnableUpdateCatalog\":true,\"Table\":\"sales_test\",\"UpdateBehavior\":\"UPDATE_IN_DATABASE\"}}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "visual_etl",
+    "branch" : "main",
+    "folder" : "etlProkect"
+  }
+}
